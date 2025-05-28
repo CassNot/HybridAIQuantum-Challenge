@@ -1,0 +1,13 @@
+README.md
+pyproject.toml
+src/pcvl_pytorch/__init__.py
+src/pcvl_pytorch/pcvl2torch.py
+src/pcvl_pytorch/sanity-test.py
+src/pcvl_pytorch/slos_torch.py
+src/pcvl_pytorch.egg-info/PKG-INFO
+src/pcvl_pytorch.egg-info/SOURCES.txt
+src/pcvl_pytorch.egg-info/dependency_links.txt
+src/pcvl_pytorch.egg-info/requires.txt
+src/pcvl_pytorch.egg-info/top_level.txt
+tests/test_pcvl2torch.py
+tests/test_pytorch_slos.py

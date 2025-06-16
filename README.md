@@ -13,7 +13,7 @@
   <p><em>Image credit: The valiant knight Dall-E</em></p>
 </div>
 
-### :zap: Presentation of the Challenge
+## :zap: Presentation of the Challenge
 
 The First Perceval Quest was jointly organized by Quandela and Scaleway to explore the intersection of quantum computing and machine learning through one of the most iconic machine learning benchmarks - the MNIST dataset.
 
@@ -21,19 +21,19 @@ The challenge was to tackle the well-known MNIST problem using a hybrid quantum 
 
 :calendar: This challenge lasted from November 2024 to March 2025. We are now happy to share the top submissions we received !
 
-## Historical Context & Challenge Overview
+### Historical Context & Challenge Overview
 
 The MNIST (Modified National Institute of Standards and Technology) dataset was introduced by Yann LeCun et al. in 1994 and has served as a fundamental benchmark in the machine learning community for almost 30 years. This collection of handwritten digits has been instrumental in testing and validating numerous computer vision approaches, from traditional machine learning to deep neural networks.
 
 While modern classical methods have achieved near-perfect accuracy on MNIST, our challenge takes a different approach. We're revisiting this iconic benchmark through the lens of quantum machine learning, not with the goal of surpassing classical accuracy records, but to explore novel quantum techniques and methodologies. To make the challenge more suitable for quantum processing, we're working with a reduced dataset of 6,000 images instead of the original 70,000, adding an interesting constraint that makes the problem more challenging and relevant for quantum approaches.
 
-### :rocket: The results
+## :rocket: The results
 
 Overall, 64 teams joined the Perceval Quest and 11 were selected for the second phase. 
 The final jouxt opposed 11 hybrid quantum-classical models that are presented in [src](./src). 
 You will also find a detailed description for each model in the associated [ReadMe](./src/README.md)
 
-## :arrow_forward: To run the solutions
+### :arrow_forward: To run the solutions
 For you to run the proposed solutions, we suggest you to create your own python environment:
  Create a virtual environment:
    ```bash
@@ -43,7 +43,7 @@ For you to run the proposed solutions, we suggest you to create your own python 
    ```
 This will download the MerLin framework ([documentation](https://merlinquantum.ai/index.html)) for easier and faster photonic QML implementation !
 
-## :bulb: Photonic Quantum Computing at Quandela
+### :bulb: Photonic Quantum Computing at Quandela
 
 This challenge leverages photonic quantum computing, a promising quantum computing paradigm that uses light particles (photons) as quantum bits. Participants will use the Perceval framework, an open-source platform developed by Quandela for programming photonic quantum computers. You can learn more about Perceval and its capabilities at [perceval.quandela.net](https://perceval.quandela.net).
 

@@ -16,6 +16,7 @@ from sklearn.manifold import TSNE
 import json
 import pandas as pd
 import re
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
 
 
 def set_seed(seed=42):
@@ -140,10 +141,10 @@ def load_dataset(args):
     transform = TransformCenter(size=SIZE)
 
     train_dataset = MNIST_partial(data=data_path, transform=transform, split = "train")
-    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
+    #train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
 
     val_dataset = MNIST_partial(data=data_path, transform=transform, split = "val")
-    val_loader = DataLoader(val_dataset, batch_size=batch_size)
+    #val_loader = DataLoader(val_dataset, batch_size=batch_size)
 
     # Convert dataset to numpy arrays
     X_train = []
@@ -157,6 +158,15 @@ def load_dataset(args):
         X_val.append(data.numpy())
         y_val.append(label.numpy() if hasattr(label, 'numpy') else label)
 
+    #scaling (not necessary as StandardScaler does not provide good results here)
+    scaler = MinMaxScaler()
+    X_train = scaler.fit_transform(X_train)
+    X_val = scaler.transform(X_val)
+
+    train_dataset = TensorDataset(torch.Tensor(X_train), torch.tensor(y_train))
+    val_dataset = TensorDataset(torch.Tensor(X_val), torch.tensor(y_val))
+    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
+    val_loader = DataLoader(val_dataset, batch_size=batch_size)
     INPUT_SIZE = SIZE * SIZE
     OUTPUT_FEATURES = 10
 
@@ -230,8 +240,8 @@ class ScaleLayer(nn.Module):
 def train_model(model, train_loader, val_loader, num_epochs = 25, lr=0.01, frequency = 1):
     # train classical baseline
     criterion = nn.CrossEntropyLoss()
+    # Betas from the ablation study
     optimizer = torch.optim.Adam(model.parameters(),lr = lr, betas=(0.8, 0.999))
-
     all_losses = []
     all_test_losses = []
     all_train_accuracies = []
@@ -291,7 +301,7 @@ def train_model(model, train_loader, val_loader, num_epochs = 25, lr=0.01, frequ
         avg_loss = total_loss / len(train_loader)
         avg_test_loss = total_test_loss / len(val_loader)
         print(
-            f'Epoch [{epoch + 1}/{num_epochs}], Train loss: {avg_loss:.4f}, Test loss: {avg_test_loss:.4f}, Train acc: {current_accuracy:.4f}, Test acc: {current_test_accuracy:.4f}, Best val acc: {best_val_acc:.4f}')
+            f'Epoch [{epoch + 1}/{num_epochs}], Train loss: {avg_loss:.4f}, Test loss: {avg_test_loss:.4f}, Train acc: {train_acc_epoch:.4f}, Test acc: {val_acc_epoch:.4f}, Best val acc: {best_val_acc:.4f}')
 
         all_losses.append(avg_loss)
         all_test_losses.append(avg_test_loss)
@@ -540,9 +550,6 @@ def save_experiment_results(results, filename='photonic_qNN_results.json'):
         json.dump(all_results, file, indent=4)
 
     return len(all_results)
-
-
-
 
 
 

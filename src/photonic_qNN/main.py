@@ -2,7 +2,7 @@ import torch
 
 from torch import nn
 from torch.utils.data import TensorDataset, DataLoader
-from nn_models import QuantumLayer, OutputMappingStrategy
+from merlin import QuantumLayer, OutputMappingStrategy
 import math
 from sklearn import svm
 import argparse
@@ -31,7 +31,7 @@ def main():
     # load data
     print("\n Loading dataset...")
     X_train,X_val,y_train,y_val, train_loader,val_loader, INPUT_SIZE, OUTPUT_FEATURES = load_dataset(args)
-    print("... data loader")
+    print(f"... data loader with input size = {INPUT_SIZE}")
     print(f" - training statistics: \n - X_train: {X_train.shape} \n - X_val: {X_val.shape}")
 
     # Reduce to desired number of components (e.g., 40)
@@ -67,12 +67,14 @@ def main():
     circuit = create_quantum_circuit(MODES, size = INPUT_SIZE, frequency = FREQUENCY)
     # build QuantumLayer (nn.Module) from circuit
     boson_layer = QuantumLayer(
-        input_size=INPUT_SIZE*FREQUENCY,
-        output_size= math.comb(MODES + photons_count-1,photons_count), # but we do not use it
-        circuit = circuit,
-        trainable_parameters= [p.name for p in circuit.get_parameters() if not p.name.startswith("px")],
-        input_state = input_state,
-        output_mapping_strategy=OutputMappingStrategy.NONE
+        input_size=INPUT_SIZE * FREQUENCY,
+        output_size=math.comb(MODES + photons_count - 1, photons_count),  # but we do not use it
+        circuit=circuit,
+        trainable_parameters=[p.name for p in circuit.get_parameters() if not p.name.startswith("px")],
+        input_parameters = ["px"],
+        input_state=input_state,
+        output_mapping_strategy=OutputMappingStrategy.NONE,
+        no_bunching=False,
     )
 
     # learnable layer to map to the correct number of classes
@@ -82,8 +84,8 @@ def main():
     input_layer = ScaleLayer(INPUT_SIZE*FREQUENCY, scale_type="learned")
     if args.display:
         visualize_scale_parameters(input_layer)
-    nn.init.xavier_uniform_(classification_layer.weight)
-    nn.init.constant_(classification_layer.bias, 0.0)
+    #nn.init.xavier_uniform_(classification_layer.weight)
+    #nn.init.constant_(classification_layer.bias, 0.0)
     # create q_model as nn.Module
     q_model = nn.Sequential(input_layer, boson_layer, classification_layer)
     print("... Model built")

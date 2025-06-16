@@ -13,15 +13,13 @@
   <p><em>Image credit: The valiant knight Dall-E</em></p>
 </div>
 
-## The Challenge
+### :zap: Presentation of the Challenge
 
-The First Perceval Quest is jointly organized by Quandela and Scaleway to explore the intersection of quantum computing and machine learning through one of the most iconic machine learning benchmarks - the MNIST dataset.
+The First Perceval Quest was jointly organized by Quandela and Scaleway to explore the intersection of quantum computing and machine learning through one of the most iconic machine learning benchmarks - the MNIST dataset.
 
-The challenge is to tackle the well-known MNIST problem using a hybrid quantum model on a subset of the original dataset. The MNIST dataset consists of 70,000 handwritten digit images, each 28x28 pixels. For this quest, you'll work with a reduced dataset of 6,000 images and use a quantum kernel to predict the digits.
+The challenge was to tackle the well-known MNIST problem using a hybrid quantum model on a subset of the original dataset. The MNIST dataset consists of 70,000 handwritten digit images, each 28x28 pixels. For this quest, you'll work with a reduced dataset of 6,000 images and use a quantum kernel to predict the digits.
 
-
-## The models proposed
-Overall, 64 teams joined the Perceval Quest and 11 were selected for the second phase. The final jouxt opposed 11 hybrid quantum-classical models that are presented in [src](./src). You will also find a detailed description for each model in the associated [ReadMe](./src/README.md)
+:calendar: This challenge lasted from November 2024 to March 2025. We are now happy to share the top submissions we received !
 
 ## Historical Context & Challenge Overview
 
@@ -29,13 +27,29 @@ The MNIST (Modified National Institute of Standards and Technology) dataset was 
 
 While modern classical methods have achieved near-perfect accuracy on MNIST, our challenge takes a different approach. We're revisiting this iconic benchmark through the lens of quantum machine learning, not with the goal of surpassing classical accuracy records, but to explore novel quantum techniques and methodologies. To make the challenge more suitable for quantum processing, we're working with a reduced dataset of 6,000 images instead of the original 70,000, adding an interesting constraint that makes the problem more challenging and relevant for quantum approaches.
 
-### Photonic Quantum Computing & Perceval
+### :rocket: The results
+
+Overall, 64 teams joined the Perceval Quest and 11 were selected for the second phase. 
+The final jouxt opposed 11 hybrid quantum-classical models that are presented in [src](./src). 
+You will also find a detailed description for each model in the associated [ReadMe](./src/README.md)
+
+## :arrow_forward: To run the solutions
+For you to run the proposed solutions, we suggest you to create your own python environment:
+ Create a virtual environment:
+   ```bash
+   python -m venv MerLin-env
+   source MerLin-env/bin/activate
+   pip install -r requirements.txt
+   ```
+This will download the MerLin framework ([documentation](https://merlinquantum.ai/index.html)) for easier and faster photonic QML implementation !
+
+## :bulb: Photonic Quantum Computing at Quandela
 
 This challenge leverages photonic quantum computing, a promising quantum computing paradigm that uses light particles (photons) as quantum bits. Participants will use the Perceval framework, an open-source platform developed by Quandela for programming photonic quantum computers. You can learn more about Perceval and its capabilities at [perceval.quandela.net](https://perceval.quandela.net).
 
 ### Quantum Computing Resources
 
-Participants can develop small scale algorithms using local simulation and in phase 2 will have access to [Scaleway's Quantum-as-a-Service platform](https://labs.scaleway.com/en/qaas/), which provides both large-scale quantum simulators and actual QPU access. This platform enables participants to test and run their quantum algorithms in both simulated and real quantum environments.
+Participants could develop small scale algorithms using local simulation and in phase 2, they were able to access to [Scaleway's Quantum-as-a-Service platform](https://labs.scaleway.com/en/qaas/), which provided both large-scale quantum simulators and actual QPU access. This platform enabled participants to test and run their quantum algorithms in both simulated and real quantum environments.
 
 ### Organization of the repository
 The dataset is located in the `data` folder, containing `train.csv` and `test.csv` files. 
@@ -49,77 +63,10 @@ Use any classical machine learning model and demonstrate improved performance wi
 Submit your solution as a reproducible Jupyter notebook.
 Modify the provided quantum model as needed. It can rely on quantum kernels or other methods. 
 
-### Challenge Structure
 
-The challenge consists of two phases:
-
-#### Phase 1 
-
-Participants submit an initial solution (possibly based, but not restricted to, on the provided quantum model). The top 10 solutions will advance to Phase 2 based on:
-
-- Accuracy improvements *potential* as defined in the Evaluation Criteria
-- Creativity in approach
-- Report quality
-
-Note tha the actual accuracy improvement is not a strict requirement for Phase 1 submission, however, clues that the 
-quantum model has the potential to improve the accuracy are expected.
-
-Selected participants will receive credits for Scaleway GPU simulators to develop extended solutions in Phase 2.
-
-#### Phase 2 
-
-Qualified participants will further develop and submit enhanced solutions.
-
-### Prizes
-
-The challenge offers exciting rewards for top performers:
-
-- 1st Place: €2,500
-- 2nd Place: €1,500
-- 3rd Place: €1,000
-- Top 10 Teams: Exclusive Quantum Computing Goodies
-
-Additionally, winners will:
-- Present their solution in a Perceval webinar
-- Have the opportunity to contribute to a scientific publication in collaboration with Quandela
-
-### How to Participate
+### :inbox_tray: Contact & Support
 
 Email perceval-challenge@quandela.com with your team description (individual or group entries welcome). You'll receive confirmation and submission instructions.
 
-### Support
-
 For any general questions, please use Perceval Forum at https://perceval.quandela.net/forum/ with the tag `Perceval Quest`.
 For technical questions, please use the GitHub Discussions tab in this repository.
-
-### Submission Requirements
-
-Your submission must include:
-1. Complete code
-2. A brief report covering:
-   - The classical model description
-   - The quantum model implementation such as quantum kernels
-   - Comparative results (with/without quantum model)
-   - Training duration metrics
-   - Any additional relevant insights
-
-### Evaluation Criteria
-
-Solutions will be evaluated against the equivalent classical models based on:
-- Accuracy improvement
-- Convergence speed
-- Model size optimization at equivalent accuracy
-
-Bonus points for:
-- Comprehensive benchmark of the proposed solution against a comparable, state-of-the-art classical approach.
-- Successful QPU validation
-- Creative approaches
-
-### Timeline
-
-- Team Registration deadline (by email to perceval-challenge@quandela.com): December 6th, 2024
-- Phase 1 submission deadline: January 13th, 2025
-- Phase 2 participant announcement: January 17th, 2025
-- Phase 2 submission deadline: March 21st, 2025
-
-Good luck! We look forward to your submissions.

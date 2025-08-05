@@ -1,9 +1,9 @@
 # this code presents the main SSL training loop and linear evaluation of a qSSL approach on MNIST dataset
-
+import argparse
+from tqdm import tqdm
 import math
 from merlin import QuantumLayer, OutputMappingStrategy
 from utils import *
-from tqdm import tqdm
 
 # parser
 parser = argparse.ArgumentParser(description='SSL with Quantum Loss')
@@ -23,8 +23,6 @@ parser.add_argument('--cnn', action='store_true', default=False, help='backbone 
 parser.add_argument('--enc-dim', type=int, default=[8, 8], nargs='+',
                         help='Dimensions of the encoder')
 # Contrastive Loss
-parser.add_argument('-hd', '--hidden_dim', type=int, default=20, help='Hidden dimension of the projector')
-parser.add_argument('-ld', '--loss_dim', type=int, default=20, help='Dimension of the loss space')
 parser.add_argument('-tau', '--temperature', type=float, default=0.07, help='Temperature of the InfoNCELoss')
 # quantum SSL
 parser.add_argument('-w', '--width', type=int, default=8, help='Dimension of the features encoded in the QNN')
@@ -65,12 +63,10 @@ class SSL_q_loss(nn.Module):
 
         self.backbone_features = args.backbone_dim
 
-        self.hidden_dim = args.hidden_dim
-        self.loss_dim = args.loss_dim
         # photonic circuit
         self.modes = args.modes
         self.no_bunching = args.no_bunching
-        self.circuit = create_quantum_circuit(modes = self.modes, feature_size= self.loss_dim)
+        self.circuit = create_quantum_circuit(modes = self.modes, feature_size= self.backbone_features)
         self.quantum = args.quantum
         if self.quantum:
             input_state = [(i + 1) % 2 for i in range(self.modes)]
@@ -79,7 +75,7 @@ class SSL_q_loss(nn.Module):
                   f"\n - # parameters: {len([p.name for p in self.circuit.get_parameters() if not p.name.startswith("feature")])}"
                   f"\n --------------------------------------")
             self.projector = QuantumLayer(
-                input_size=self.loss_dim,
+                input_size=self.backbone_features,
                 output_size=None, # but we do not use it
                 circuit = self.circuit,
                 trainable_parameters= [p.name for p in self.circuit.get_parameters() if not p.name.startswith("feature")],
@@ -91,7 +87,7 @@ class SSL_q_loss(nn.Module):
             self.criterion = similarity
         else:
             pseudo_output_size = math.comb(self.modes+self.modes//2 -1,self.modes//2) if self.no_bunching else math.comb(self.modes,self.modes//2)
-            self.projector = nn.Linear(self.loss_dim, pseudo_output_size)
+            self.projector = nn.Linear(self.backbone_features, pseudo_output_size)
             self.criterion = InfoNCELoss()
 
         if not args.trained:
